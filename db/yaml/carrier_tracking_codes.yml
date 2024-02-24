@@ -1,0 +1,5 @@
+UN: 'Unknown'
+INT: 'In Transit'
+OOD: 'Out For Delivery'
+DLY: 'Delayed'
+DELI: 'Delivered'
