@@ -1,10 +1,8 @@
-module Services
-    module Movies
-        class Client < HttpClient
-            def get
-                super do
-                    puts "hello"
-                end
+module Movies
+    class Client < HttpClient
+        def get
+            super do
+                puts "hello"
             end
         end
     end

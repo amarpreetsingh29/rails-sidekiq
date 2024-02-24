@@ -1,21 +1,19 @@
-module Services 
-    class HttpClient
-        def get(&block)
-            Rails.logger.info("Making get Request")
-            yield
-            Rails.logger.info("Get Request completed")
-        end
+class HttpClient
+    def get(&block)
+        Rails.logger.info("Making get Request")
+        yield
+        Rails.logger.info("Get Request completed")
+    end
 
-        def post
+    def post
 
-        end
+    end
 
-        def put
+    def put
 
-        end
-        
-        def delete
+    end
 
-        end
+    def delete
+
     end
 end
