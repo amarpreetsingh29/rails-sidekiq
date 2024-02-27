@@ -1,15 +1,14 @@
 module Etl
-  class TransformJob
-    include Sidekiq::Job
-
+  class TransformJob < BaseWorkerJob
     path = File.join(Rails.root, "db", "yaml" ,"carrier_tracking_codes.yml")
     TRACKING_CODES = YAML.load_file(File.open(path))
 
     def perform(args)
       args = args.with_indifferent_access
-      Sidekiq::Client.via(RedisPool.secondary_pool) do
-        Etl::LoadJob.perform_async(transform_args(args))
-      end
+      # Sidekiq::Client.via(RedisPool.secondary_pool) do
+      #   Etl::LoadJob.perform_async(transform_args(args))
+      # end
+      Etl::LoadJob.perform_async(transform_args(args))
     end
 
     def transform_args(args)

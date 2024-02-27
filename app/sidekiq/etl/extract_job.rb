@@ -1,8 +1,5 @@
 module Etl
-  class ExtractJob
-    include Sidekiq::Job
-
-
+  class ExtractJob < BaseWorkerJob
     def perform
       file_path = 'app/assets/csv/carrier_tracking_data.csv'
       options = {

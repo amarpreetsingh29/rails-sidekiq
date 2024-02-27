@@ -1,7 +1,5 @@
 module Etl
-  class LoadJob
-    include Sidekiq::Job
-
+  class LoadJob < BaseWorkerJob
     # loads tracking events into db
     def perform(args)
       args = args.with_indifferent_access
