@@ -1,7 +1,7 @@
-FROM ruby:3.0
-WORKDIR /mySite
-COPY Gemfile /mySite/Gemfile
-COPY Gemfile.lock /mySite/Gemfile.lock
+FROM ruby:3.0.0
+WORKDIR /rails-sidekiq
+COPY Gemfile* ./
 RUN bundle install
-
+COPY . .
+EXPOSE 3000
 CMD rails s
