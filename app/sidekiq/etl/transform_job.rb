@@ -7,7 +7,9 @@ module Etl
 
     def perform(args)
       args = args.with_indifferent_access
-      Etl::LoadJob.perform_async(transform_args(args))
+      Sidekiq::Client.via(RedisPool.secondary_pool) do
+        Etl::LoadJob.perform_async(transform_args(args))
+      end
     end
 
     def transform_args(args)
