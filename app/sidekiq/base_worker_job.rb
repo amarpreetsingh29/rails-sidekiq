@@ -9,6 +9,6 @@ class BaseWorkerJob
     redis_pool = POOL[self.name] || RedisPool.default_pool
 
     client = Sidekiq::Client.new(pool: redis_pool)
-    client.push('class'=>self.name, 'args'=>[args])
+    client.push('class'=>self.name, 'args'=> args)
   end
 end
