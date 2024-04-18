@@ -3,7 +3,8 @@ class RedisPool
         attr_reader :default_pool
 
         def init
-            @default_pool = connection_pool(ENV['REDIS_URL'])
+            sidekiq_redis_url = "#{ENV['REDIS_PROTOCOL']}://#{ENV['REDIS_SIDEKIQ_HOST']}:#{ENV['REDIS_SIDEKIQ_PORT']}/#{ENV['REDIS_SIDEKIQ_DB']}"
+            @default_pool = connection_pool(sidekiq_redis_url)
         end
 
         private
