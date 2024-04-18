@@ -1,0 +1,36 @@
+services:
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - '6379:6379'
+
+  web:
+    build: ./
+    container_name: web
+    command: rails s -b '0.0.0.0'
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/rails-sidekiq
+    depends_on:
+      - redis
+    environment:
+      - REDIS_URL=redis://redis:6379
+    stdin_open: true
+    tty: true
+
+  sidekiq:
+    build: ./
+    container_name: sidekiq
+    volumes:
+      - .:/rails-sidekiq
+    command: bundle exec sidekiq
+    environment:
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+    stdin_open: true
+    tty: true
+
+
