@@ -1,0 +1,3 @@
+:queues:
+ - ['webhooks', 1]
+ - ['retry', 1]

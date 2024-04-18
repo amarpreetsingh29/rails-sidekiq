@@ -11,6 +11,12 @@ services:
     ports:
       - '6380:6379'
 
+  redis_sidekiq_webhooks:
+    image: redis
+    container_name: redis_sidekiq_webhooks
+    ports:
+      - '6390:6379'
+
   web:
     build: ./
     container_name: web
@@ -43,6 +49,22 @@ services:
     environment:
       - REDIS_PROTOCOL=redis
       - REDIS_SIDEKIQ_HOST=redis_sidekiq
+      - REDIS_SIDEKIQ_PORT=6379
+      - REDIS_SIDEKIQ_DB=3
+    stdin_open: true
+    tty: true
+
+  sidekiq_webhooks:
+    build: ./
+    container_name: sidekiq_webhooks
+    depends_on:
+      - redis_sidekiq_webhooks
+    volumes:
+      - .:/rails-sidekiq
+    command: bundle exec sidekiq -C config/sidekiq_webhooks.yml
+    environment:
+      - REDIS_PROTOCOL=redis
+      - REDIS_SIDEKIQ_HOST=redis_sidekiq_webhooks
       - REDIS_SIDEKIQ_PORT=6379
       - REDIS_SIDEKIQ_DB=3
     stdin_open: true
