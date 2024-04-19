@@ -35,6 +35,9 @@ services:
       - REDIS_SIDEKIQ_HOST=redis_sidekiq
       - REDIS_SIDEKIQ_PORT=6379
       - REDIS_SIDEKIQ_DB=3
+      - REDIS_SIDEKIQ_WEBHOOKS_HOST=redis_sidekiq_webhooks
+      - REDIS_SIDEKIQ_WEBHOOKS_PORT=6379
+      - REDIS_SIDEKIQ_WEBHOOKS_DB=3
     stdin_open: true
     tty: true
 
