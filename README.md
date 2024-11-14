@@ -1,5 +1,4 @@
-This application is a sample project, built on RubyOnRails(7.0). In this project, I have tried to cover a few learnings related to building software that I learnt in my carrier while working in various organisations.
-
+This application is a sample project, built on RubyOnRails(7.0). 
 * Ruby version - 3.0
 * Rails Version - 7.0
 
