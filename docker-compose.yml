@@ -1,4 +1,23 @@
 services:
+  ## logging
+  promtail:
+    image: grafana/promtail:3.2.0
+    container_name: promtail
+    volumes:
+      - ./promtail.yaml:/etc/promtail/config.yaml
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: -config.file=/etc/promtail/config.yaml
+
+  loki:
+    image: grafana/loki:3.2.0
+    container_name: loki
+    command: [ "-config.file=/etc/loki/config.yaml" ]
+    volumes:
+      - ./loki.yaml:/etc/loki/config.yaml
+    ports:
+      - "3100:3100"
+
+  ## traces
   tempo:
     image: grafana/tempo:2.6.0
     container_name: tempo
@@ -21,6 +40,7 @@ services:
     depends_on:
       - tempo
 
+  ## metrics
   prometheus:
     image: prom/prometheus:latest
     volumes:
@@ -28,6 +48,7 @@ services:
     ports:
       - "9090:9090"
 
+  ## visualization
   grafana:
     image: grafana/grafana:latest
     volumes:
