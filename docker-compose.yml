@@ -1,4 +1,42 @@
 services:
+  tempo:
+    image: grafana/tempo:2.6.0
+    container_name: tempo
+    command: [ "-config.file=/etc/tempo.yaml" ]
+    volumes:
+      - ./tempo-config.yaml:/etc/tempo.yaml
+    ports:
+      - "3200:3200"   # tempo metrics
+      - "6000:4318"  # otlp http
+      - "6001:4317"  # otlp grpc
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib
+    container_name: otel-collector
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml
+    ports:
+      - 4317:4317 # OTLP gRPC receiver
+      - 4318:4318 # OTLP http receiver
+    depends_on:
+      - tempo
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+
   redis:
     image: redis
     container_name: redis
@@ -27,6 +65,7 @@ services:
       - .:/rails-sidekiq
     depends_on:
       - redis
+      - otel-collector
     environment:
       - REDIS_PROTOCOL=redis
       - REDIS_HOST=redis
@@ -38,6 +77,7 @@ services:
       - REDIS_SIDEKIQ_WEBHOOKS_HOST=redis_sidekiq_webhooks
       - REDIS_SIDEKIQ_WEBHOOKS_PORT=6379
       - REDIS_SIDEKIQ_WEBHOOKS_DB=3
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
     stdin_open: true
     tty: true
 
@@ -46,6 +86,7 @@ services:
     container_name: sidekiq
     depends_on:
       - redis_sidekiq
+      - otel-collector
     volumes:
       - .:/rails-sidekiq
     command: bundle exec sidekiq
@@ -54,6 +95,7 @@ services:
       - REDIS_SIDEKIQ_HOST=redis_sidekiq
       - REDIS_SIDEKIQ_PORT=6379
       - REDIS_SIDEKIQ_DB=3
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
     stdin_open: true
     tty: true
 
@@ -62,6 +104,7 @@ services:
     container_name: sidekiq_webhooks
     depends_on:
       - redis_sidekiq_webhooks
+      - otel-collector
     volumes:
       - .:/rails-sidekiq
     command: bundle exec sidekiq -C config/sidekiq_webhooks.yml
@@ -70,6 +113,7 @@ services:
       - REDIS_SIDEKIQ_HOST=redis_sidekiq_webhooks
       - REDIS_SIDEKIQ_PORT=6379
       - REDIS_SIDEKIQ_DB=3
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
     stdin_open: true
     tty: true
 

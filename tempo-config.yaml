@@ -1,0 +1,21 @@
+server:
+  http_listen_port: 3200
+
+distributor:
+  log_received_spans:
+    enabled: true
+  receivers:
+    otlp:
+      protocols:
+        grpc:
+
+ingester:
+  trace_idle_period: 30s               # the length of time after a trace has not received spans to consider it complete and flush it
+  max_block_bytes: 1_000_000           # cut the head block when it hits this size or ...
+  max_block_duration: 5m               #   this much time passes
+
+storage:
+  trace:
+    backend: local
+    local:
+      path: /tmp/tempo/traces
