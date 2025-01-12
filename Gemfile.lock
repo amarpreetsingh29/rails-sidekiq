@@ -68,6 +68,7 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
+    base64 (0.2.0)
     bcrypt (3.1.20)
     bigdecimal (3.1.9)
     bindex (0.8.1)
@@ -353,6 +354,8 @@ GEM
     opentelemetry-semantic_conventions (1.10.1)
       opentelemetry-api (~> 1.0)
     orm_adapter (0.5.0)
+    prometheus-client (4.2.3)
+      base64
     psych (5.1.2)
       stringio
     public_suffix (5.0.4)
@@ -471,8 +474,8 @@ DEPENDENCIES
   job-iteration (~> 1.4)
   opentelemetry-exporter-otlp
   opentelemetry-instrumentation-all
-  opentelemetry-instrumentation-http
   opentelemetry-sdk
+  prometheus-client
   puma (~> 5.0)
   rails (~> 7.0.3)
   redis (~> 5.0)
