@@ -52,7 +52,7 @@ services:
   grafana:
     image: grafana/grafana:latest
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - grafana-data:/var/lib/grafana
     ports:
       - "3001:3000"
     environment:
@@ -138,4 +138,5 @@ services:
     stdin_open: true
     tty: true
 
-
+volumes:
+  grafana-data:
