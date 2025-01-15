@@ -53,6 +53,7 @@ services:
     image: grafana/grafana:latest
     volumes:
       - grafana-data:/var/lib/grafana
+      - ./dashboards:/etc/grafana/provisioning/dashboards
     ports:
       - "3001:3000"
     environment:
