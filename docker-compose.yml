@@ -100,6 +100,7 @@ services:
       - REDIS_SIDEKIQ_WEBHOOKS_PORT=6379
       - REDIS_SIDEKIQ_WEBHOOKS_DB=3
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
+      - SERVICE_NAME=web
     stdin_open: true
     tty: true
 
@@ -118,6 +119,7 @@ services:
       - REDIS_SIDEKIQ_PORT=6379
       - REDIS_SIDEKIQ_DB=3
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
+      - SERVICE_NAME=sidekiq
     stdin_open: true
     tty: true
 
@@ -136,6 +138,7 @@ services:
       - REDIS_SIDEKIQ_PORT=6379
       - REDIS_SIDEKIQ_DB=3
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
+      - SERVICE_NAME=sidekiq_webhooks
     stdin_open: true
     tty: true
 
