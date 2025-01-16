@@ -9,4 +9,6 @@ Rails.application.routes.draw do
 
   mount Sidekiq::Web => '/sidekiq'
   post '/tracking_events', to: 'tracking_events#schedule'
+  get '/tracking_events', to: 'tracking_events#list'
+  get '/carriers', to: 'tracking_events#carriers'
 end
