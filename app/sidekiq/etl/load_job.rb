@@ -3,14 +3,17 @@ module Etl
     # loads tracking events into db
     def perform(args)
       args = args.with_indifferent_access
-      TrackingEvent.create!(tracking_event_attrs(args))
+      tracking_number = TrackingNumber.find_or_create_by!(
+        tag: args[:tracking_number],
+        carrier_id: args[:carrier_id],
+      )
+      TrackingEvent.create!(tracking_event_attrs(args).merge({tracking_number: tracking_number}))
     end
 
     private
+
     def tracking_event_attrs(args)
       {
-        tracking_number: args[:tracking_number],
-        carrier_id: args[:carrier_id],
         event: args[:event],
         happened_at: DateTime.parse(args[:happened_at])
       }

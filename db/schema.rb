@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_26_210820) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_18_011942) do
   create_table "carriers", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -21,12 +21,19 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_210820) do
   end
 
   create_table "tracking_events", force: :cascade do |t|
-    t.string "tracking_number"
-    t.integer "carrier_id"
+    t.string "tracking_number_id"
     t.text "event"
     t.datetime "happened_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "tracking_numbers", force: :cascade do |t|
+    t.string "tag"
+    t.integer "carrier_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag"], name: "index_tracking_numbers_on_tag"
   end
 
 end

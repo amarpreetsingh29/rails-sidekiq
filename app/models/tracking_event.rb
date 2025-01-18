@@ -1,16 +1,11 @@
 class TrackingEvent < ApplicationRecord
   include ActiveModel::Serializers::JSON
 
-  belongs_to :carrier
+  belongs_to :tracking_number
 
-  validates :tracking_number,on: :create, presence: true
-  validates :carrier, on: :create, presence: true
-  validates :event, on: :create, presence: true
+  validates :tracking_number, presence: true
+  validates :event, presence: true
   validates :happened_at, presence: true
 
   scope :usps, -> { where(carrier: 'usps') }
-
-  def attributes
-    {'id' => id}
-  end
 end
