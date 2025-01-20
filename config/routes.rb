@@ -8,7 +8,8 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   mount Sidekiq::Web => '/sidekiq'
+
   get '/tracking/carriers', to: 'tracking#carriers'
-  post '/tracking/generate', to: 'tracking#generate'
-  get '/tracking/:id', to: 'tracking#events'
+  post '/tracking/generate_dummy_events', to: 'tracking#generate_dummy_events'
+  get '/tracking/:id/events', to: 'tracking#events'
 end
