@@ -1,6 +1,10 @@
 class TrackingNumberSerializer < ActiveModel::Serializer
-  attributes :tag, :carrier, :tracking_events
+  attributes :tracking_number, :carrier, :tracking_events
 
   belongs_to :carrier
   has_many :tracking_events
+
+  def tracking_number
+    object.tag
+  end
 end
