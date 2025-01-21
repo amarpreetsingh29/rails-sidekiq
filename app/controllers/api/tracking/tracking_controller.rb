@@ -1,6 +1,6 @@
 
 
-class TrackingController < ApplicationController
+class Api::Tracking::TrackingController < ApplicationController
   def carriers
     carriers = Carrier.all
     render json: {carriers: ActiveModelSerializers::SerializableResource.new(carriers) }, status: 200, content_type: "application/json"
