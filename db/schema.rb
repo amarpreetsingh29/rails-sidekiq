@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_18_011942) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_22_182108) do
   create_table "carriers", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -18,6 +18,13 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_18_011942) do
   end
 
   create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
+  end
+
+  create_table "tracker_subscriptions", force: :cascade do |t|
+    t.integer "tracking_number_id"
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tracking_events", force: :cascade do |t|

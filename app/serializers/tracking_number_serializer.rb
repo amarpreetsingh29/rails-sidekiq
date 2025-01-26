@@ -7,4 +7,8 @@ class TrackingNumberSerializer < ActiveModel::Serializer
   def tracking_number
     object.tag
   end
+
+  def carrier
+    object.carrier.name
+  end
 end
