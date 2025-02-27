@@ -1,5 +1,5 @@
 class TrackingNumberSerializer < ActiveModel::Serializer
-  attributes :tracking_number, :carrier, :tracking_events
+  attributes :tracking_number, :last_event_message, :last_event_happened_at, :created_at
 
   belongs_to :carrier
   has_many :tracking_events
@@ -10,5 +10,17 @@ class TrackingNumberSerializer < ActiveModel::Serializer
 
   def carrier
     object.carrier.name
+  end
+
+  def last_event_message
+    object.tracking_events.last&.event
+  end
+
+  def last_event_happened_at
+    object.tracking_events.last&.happened_at
+  end
+
+  def created_at
+    object.created_at
   end
 end

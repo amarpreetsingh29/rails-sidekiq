@@ -2,7 +2,8 @@
 
 class Api::TrackerController < ApplicationController
   def index
-    render json: TrackingNumber.all, status: 200, content_type: "application/json"
+    trackers = TrackingNumber.includes(:tracking_events, :carrier).all
+    render json: trackers, status: 200, content_type: "application/json"
   end
 
   def show
