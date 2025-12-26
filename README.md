@@ -7,5 +7,5 @@ The list of topics covered are as follows:
 * Scaling Sidekiq background processing by Sharding Redis
 * Making background jobs interruptible and resumable by design using [job-iteration(a Shopify gem)](https://github.com/Shopify/job-iteration) to perform maintenance tasks(eg. backfilling database etc)
 * CSV processing
-* [Datadog Tracing & APM](https://docs.datadoghq.com/getting_started/tracing) [TBD]
+* [Open Telemetry Tracing](https://opentelemetry.io/docs/what-is-opentelemetry/) [TBD]
 * Error handling [TBD]
